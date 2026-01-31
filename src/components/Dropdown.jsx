@@ -7,12 +7,12 @@ const Dropdown = ({ label = "Menu", items = [] }) => {
   // const [isOpen, setIsOpen] = useState(false);
 
   const dotStyle =
-    "absolute bg-light-secondary dark:bg-dark-secondary rounded-full";
+    "absolute transition-colors duration-700 bg-light-secondary dark:bg-dark-secondary rounded-full";
 
   return (
     <div className="relative inline-block text-left">
       <div
-        className="relative inline-flex items-center rounded-full overflow-hidden  bg-light-text dark:bg-dark-text"
+        className="relative inline-flex items-center rounded-full overflow-hidden transition-colors duration-700 bg-light-text dark:bg-dark-text"
         ref={dropdownRef}
       >
         {/* Dot Area */}
@@ -81,7 +81,7 @@ const Dropdown = ({ label = "Menu", items = [] }) => {
         {/* MENU Button */}
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className="bg-light-secondary dark:bg-dark-secondary text-white px-6 py-2 flex items-center justify-center uppercase font-bold tracking-wide text-sm rounded-full"
+          className="transition-colors duration-700 bg-light-secondary dark:bg-dark-secondary text-white px-6 py-2 flex items-center justify-center uppercase font-semibold tracking-wide text-sm rounded-full"
         >
           {label}
         </button>

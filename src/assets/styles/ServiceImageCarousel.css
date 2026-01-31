@@ -1,0 +1,15 @@
+.flickity-page-dots {
+  bottom: -35px;
+}
+
+.flickity-page-dots .dot {
+  width: 6px;
+  height: 6px;
+  background: #1ba6b3;
+  opacity: 0.3;
+  margin: 0 4px;
+}
+
+.flickity-page-dots .dot.is-selected {
+  opacity: 1;
+}

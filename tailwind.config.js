@@ -7,11 +7,33 @@ export default {
         vina: ['Vina Sans', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
       },
+      animation: {
+        'move-left': 'move-left 0.1s linear infinite',
+        'move-right': 'move-right 1s linear infinite'
+      },
+      keyframes: {
+        'move-left': {
+          '0%': {
+            transform: 'translateX(0%)'
+          },
+          '100%': {
+            transform: 'translateX(-50%)'
+          }
+        },
+        'move-right': {
+          '0%': {
+            transform: 'translateX(-50%)'
+          },
+          '100%': {
+            transform: 'translateX(0%)'
+          }
+        }
+      },
       colors: {
         dark: {
           text: "#ffffff",
           background: "#000000",
-          primary: "#0D0D0D",
+          primary: "#1c1c1c",
           secondary: "#53D364",
         },
         light: {

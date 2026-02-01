@@ -10,9 +10,12 @@ import StackedCards from "./sections/CardSection";
 import Container from "./components/Container";
 import FloatingNav from "./components/FloatingNav";
 import FAQ from "./sections/FAQ";
+import Testimonial from "./sections/Testimonial";
+import { useRef } from "react";
 
 function App() {
   const [darkMode, setDarkMode] = useDarkMode();
+  const footerRef = useRef(null);
   return (
     // <main className="min-h-screen flex items-center justify-center text-center p-6 bg-[#9FD7DF] dark:bg-black">
     //   <div className="grid grid-cols-2">
@@ -31,13 +34,18 @@ function App() {
     //     <div className="col-span-1"></div>
     //   </div>
     <div className="transition-colors duration-700 bg-light-background dark:bg-dark-background ">
-      <FloatingNav darkMode={darkMode} setDarkMode={setDarkMode} />
+      <FloatingNav
+        footerRef={footerRef}
+        darkMode={darkMode}
+        setDarkMode={setDarkMode}
+      />
       <Container>
         <div className="overflow-hidden">
           <Home darkMode={darkMode} setDarkMode={setDarkMode} />
           <div className=" p-4">
             {" "}
             {/*p-4*/}
+            {/* <Testimonial /> */}
             <WowSection />
             <Services />
           </div>
@@ -49,7 +57,7 @@ function App() {
         <div>
           <FAQ />
         </div>
-        <div className="overflow-hidden">
+        <div ref={footerRef} className="overflow-hidden">
           <div className=" p-4">
             <Footer />
           </div>

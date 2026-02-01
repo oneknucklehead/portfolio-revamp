@@ -1,38 +1,39 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { animateScroll } from "react-scroll";
+import DraggablePill from "../components/DraggablePill";
 
 const socials = [
   {
     title: "Follow Me",
     emoji: "⚽",
-    x: 0.33,
-    y: 0.12,
+    left: 25,
+    top: 12,
     rotate: -20,
   },
   {
     title: "Instagram",
     emoji: "🎮",
-    x: 0.35,
-    y: 0.62,
+    left: 42,
+    top: 42,
   },
   {
     title: "Twitter",
     emoji: "🎱",
-    x: 0.3,
-    y: 0.4,
+    left: 40,
+    top: 22,
   },
   {
     title: "LinkedIn",
     emoji: "🏏",
-    x: 0.5,
-    y: 0.2,
+    left: 20,
+    top: 40,
   },
   {
     title: "GitHub",
     emoji: "🌌",
-    x: 0.55,
-    y: 0.42,
+    left: 30,
+    top: 60,
   },
 ];
 
@@ -113,22 +114,15 @@ const Footer = () => {
         <div className="col-span-7">
           <motion.div
             ref={constraintsRef}
-            className="relative h-[250px] overflow-hidden bg-light-secondary dark:bg-dark-secondary rounded-xl p-4"
+            className="relative w-full h-[250px] overflow-hidden bg-light-secondary dark:bg-dark-secondary rounded-xl p-4 z-10"
           >
             {socials.map((social) => (
-              <motion.div
+              <DraggablePill
                 key={social.title}
-                drag
-                dragConstraints={constraintsRef}
-                className="absolute uppercase bg-light-secondary dark:bg-dark-secondary text-white flex items-center gap-2 px-8 border-2 border-white rounded-full py-2.5 cursor-pointer"
-                style={{
-                  x: size.width * social.x,
-                  y: size.height * social.y,
-                  rotate: social.rotate || 0,
-                }}
-              >
-                <span className="font-semibold">{social.title}</span>
-              </motion.div>
+                social={social}
+                size={size}
+                constraintsRef={constraintsRef}
+              />
             ))}
           </motion.div>
         </div>

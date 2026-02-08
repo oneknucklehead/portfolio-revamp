@@ -1,11 +1,13 @@
 {
   "name": "portfolio-revamp",
+  "homepage": "https://oneknucklehead.github.io/portfolio-revamp/",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

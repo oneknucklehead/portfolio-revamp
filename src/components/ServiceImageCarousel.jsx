@@ -60,12 +60,12 @@ const ServiceImageCarousel = () => {
         <div ref={carouselRef} className="carousel">
           {services.map((item, i) => (
             <div key={i} className="carousel-cell w-full">
-              <motion.div className="relative h-[520px] rounded-t-xl overflow-hidden">
+              <motion.div className="relative h-[420px] my-5 lg:h-[520px] rounded-t-xl overflow-hidden">
                 {/* IMAGE */}
                 <img
                   src={item.image}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
 
                 {/* LIKE + LINK */}
@@ -95,7 +95,7 @@ const ServiceImageCarousel = () => {
             </div>
           ))}
         </div>
-        <div className="absolute right-[-16px] bottom-24 flex flex-col gap-2 z-20">
+        <div className="hidden md:flex absolute right-[-16px] bottom-24 flex-col gap-2 z-20">
           {services.map((_, index) => (
             <motion.button
               key={index}

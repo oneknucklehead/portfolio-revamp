@@ -13,7 +13,6 @@ export default function RotatingTextList() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Compute next index and rotated items
       const nextIndex = (currentIndex + 1) % items.length;
 
       const nextVisible = [
@@ -31,15 +30,15 @@ export default function RotatingTextList() {
 
   return (
     <div className="flex items-center justify-center w-full">
-      <div className="flex justify-center space-x-7 w-full">
+      <div className="flex justify-center space-x-0 lg:space-x-7 w-full">
         {/* Left Block */}
         <div className="text-white px-4 py-2 text-end">
-          <h2 className="text-2xl font-semibold">
+          <h2 className="text-base sm:text-2xl font-semibold">
             My design
             <br />
             philosophy is,
           </h2>
-          <button className="mt-4 px-5 py-2 uppercase border hover:border-light-secondary hover:dark:border-dark-secondary border-white rounded-full text-sm font-medium hover:bg-light-secondary hover:text-white hover:dark:bg-dark-secondary hover:dark:text-dark-text transition duration-700">
+          <button className="mt-3 sm:mt-4 px-3 sm:px-5 py-1.5 sm:py-2 uppercase border hover:border-light-secondary hover:dark:border-dark-secondary border-white rounded-full text-xs sm:text-sm font-medium hover:bg-light-secondary hover:text-white hover:dark:bg-dark-secondary hover:dark:text-dark-text transition duration-700">
             Let's Build
           </button>
         </div>
@@ -48,17 +47,17 @@ export default function RotatingTextList() {
         <div className="w-full h-fit overflow-hidden rounded px-4 py-2">
           <AnimatePresence mode="popLayout">
             <motion.div
-              key={visibleItems.join("-")} // re-render on change
+              key={visibleItems.join("-")}
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -30, opacity: 0 }}
               transition={{ duration: 0.15, ease: "easeInOut" }}
-              className="flex flex-col justify-center text-white text-2xl italic font-semibold "
+              className="flex flex-col justify-center text-white text-base sm:text-2xl italic font-semibold"
             >
               {visibleItems.map((line, i) => (
                 <div
                   key={i}
-                  className={i === 0 ? " px-3 py-2" : "bg-white/5 px-3 py-2"}
+                  className={`px-2 sm:px-3 py-1.5 sm:py-2 ${i === 0 ? "" : "bg-white/5"}`}
                 >
                   {line}
                 </div>

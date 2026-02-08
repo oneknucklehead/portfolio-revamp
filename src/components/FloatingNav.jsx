@@ -11,26 +11,30 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { id: "home", icon: <Home size={20} />, label: "Home" },
-  { id: "achievements", icon: <Trophy size={20} />, label: "Achievements" },
-  { id: "design", icon: <PenTool size={20} />, label: "Design" },
-  { id: "stats", icon: <BarChart2 size={20} />, label: "Stats" },
-  { id: "help", icon: <HelpCircle size={20} />, label: "Help" },
+  { id: "home", icon: Home, label: "Home" },
+  { id: "achievements", icon: Trophy, label: "Achievements" },
+  { id: "design", icon: PenTool, label: "Design" },
+  { id: "stats", icon: BarChart2, label: "Stats" },
+  { id: "help", icon: HelpCircle, label: "Help" },
 ];
 
 const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
   const [activeTab, setActiveTab] = useState("achievements");
   const [hoveredTab, setHoveredTab] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
-  // Consistent spring transition for layout animations
   const springTransition = { type: "spring", duration: 0.5, bounce: 0.2 };
 
-  // Visibility States
   const [isVisible, setIsVisible] = useState(false);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
 
   useEffect(() => {
-    // 1. Scroll Logic: Show after scrolling 200px
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsVisible(true);
@@ -39,12 +43,11 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
       }
     };
 
-    // 2. Intersection Logic: Hide when footer is visible
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsFooterVisible(entry.isIntersecting);
       },
-      { threshold: 0.1 }, // Triggers when 10% of footer is visible
+      { threshold: 0.1 },
     );
 
     if (footerRef?.current) {
@@ -58,7 +61,6 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
     };
   }, [footerRef]);
 
-  // Combined visibility condition
   const showNav = isVisible && !isFooterVisible;
 
   return (
@@ -66,7 +68,7 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
       {showNav && (
         <div
           style={{ pointerEvents: showNav ? "auto" : "none" }}
-          className="pointer-events-none flex items-center gap-4 fixed bottom-10 left-1/2 -translate-x-1/2 z-50"
+          className="pointer-events-none flex items-center gap-4 fixed bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-50"
         >
           <motion.nav
             initial={{ y: 100, opacity: 0 }}
@@ -74,13 +76,16 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
             exit={{ y: 100, opacity: 0 }}
             layout
             transition={springTransition}
-            className="pointer-events-auto flex items-center gap-2 bg-white/90 backdrop-blur-md border border-gray-200 p-2 rounded-full shadow-2xl"
+            className="pointer-events-auto flex items-center gap-1 sm:gap-2 bg-white/90 backdrop-blur-md border border-gray-200 p-1.5 sm:p-2 rounded-full shadow-2xl"
           >
-            <motion.div layout className="flex items-center gap-1">
+            <motion.div layout className="flex items-center gap-0.5 sm:gap-1">
               {navItems.map((item) => {
                 const isActive = activeTab === item.id;
                 const isHovered = hoveredTab === item.id;
-                const showLabel = isActive || isHovered;
+                // On mobile only show label for active, on desktop show on hover too
+                const showLabel = isMobile ? isActive : isActive || isHovered;
+                const IconComponent = item.icon;
+                const iconSize = isMobile ? 18 : 20;
 
                 return (
                   <motion.button
@@ -89,10 +94,9 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
                     onMouseEnter={() => setHoveredTab(item.id)}
                     onMouseLeave={() => setHoveredTab(null)}
                     onClick={() => setActiveTab(item.id)}
-                    className="relative px-4 py-3 flex flex-col items-center justify-center min-w-[50px]"
+                    className="relative px-2.5 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[40px] sm:min-w-[50px]"
                     transition={springTransition}
                   >
-                    {/* Selection Background */}
                     {isActive && (
                       <motion.div
                         layoutId="active-pill"
@@ -113,10 +117,9 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
                           : "text-black"
                       } transition-colors duration-300`}
                     >
-                      {item.icon}
+                      <IconComponent size={iconSize} />
                     </motion.div>
 
-                    {/* Animated Label */}
                     <AnimatePresence mode="popLayout">
                       {showLabel && (
                         <motion.span
@@ -127,8 +130,8 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
                           className={`text-xs ${
                             isActive
                               ? "text-light-primary dark:text-dark-text"
-                              : "text-black "
-                          } font-semibold mt-1 whitespace-nowrap overflow-hidden`}
+                              : "text-black"
+                          } font-semibold mt-0.5 sm:mt-1 whitespace-nowrap overflow-hidden`}
                         >
                           {item.label}
                         </motion.span>
@@ -138,17 +141,18 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
                 );
               })}
 
-              {/* Separator Line */}
-              {/* <motion.div layout className="w-[1px] h-6 bg-zinc-700 ml-4" /> */}
-              {/* Theme Toggle Button */}
               <motion.button
                 layout
                 onClick={() => setDarkMode(!darkMode)}
-                className="px-4 py-3 flex flex-col items-center justify-center min-w-[50px] text-black "
+                className="px-2.5 sm:px-4 py-2 sm:py-3 flex flex-col items-center justify-center min-w-[40px] sm:min-w-[50px] text-black"
                 transition={springTransition}
               >
                 <motion.div layout>
-                  {darkMode ? <Moon size={20} /> : <SunMedium size={20} />}
+                  {darkMode ? (
+                    <Moon size={isMobile ? 18 : 20} />
+                  ) : (
+                    <SunMedium size={isMobile ? 18 : 20} />
+                  )}
                 </motion.div>
                 <AnimatePresence mode="popLayout">
                   <motion.span
@@ -156,7 +160,7 @@ const FloatingNav = ({ darkMode, setDarkMode, footerRef }) => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
-                    className="text-xs font-semibold mt-1 whitespace-nowrap overflow-hidden"
+                    className="text-xs font-semibold mt-0.5 sm:mt-1 whitespace-nowrap overflow-hidden"
                   >
                     {darkMode ? "Dark" : "Light"}
                   </motion.span>

@@ -195,7 +195,7 @@ export default function CapabilitiesSection() {
             </AnimatePresence>
           </div>
 
-          <button className="group transition duration-700 w-full max-w-sm inline-flex items-center justify-between rounded-lg gap-2 mt-24 bg-white px-4 py-2 font-semibold">
+          <button className="group transition duration-700 w-full max-w-sm inline-flex items-center justify-between rounded-lg gap-2 mt-24 bg-white dark:bg-white/90 px-4 py-2 font-semibold">
             <p className="text-light-primary dark:text-dark-background">
               See what I can do?
             </p>

@@ -98,13 +98,20 @@ const Dropdown = ({ label = "Menu", items = [] }) => {
           >
             <div className="py-1">
               {items.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href || "#"}
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition"
-                >
-                  {item.label}
-                </a>
+                <div>
+                  <a
+                    key={index}
+                    href={item.href || "#"}
+                    className="flex gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-black transition"
+                  >
+                    {item.icon && (
+                      <span className="w-5 h-5 flex items-start">
+                        {item.icon && item.icon}
+                      </span>
+                    )}
+                    <span>{item.label}</span>
+                  </a>
+                </div>
               ))}
             </div>
           </motion.div>
